@@ -19,29 +19,17 @@ public interface CanIEatConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "timeout",
-			name = "Notification Delay",
-			description = "The notification delay after the player is idle",
-			position = 1
-	)
-	@Units(Units.MILLISECONDS)
-	default int getExampleDelay()
-	{
-		return 5000;
-	}
-
-	@ConfigItem(
 			keyName = "hitpoints",
 			name = "Enable Food Warning",
 			description = "Enable a notification when able to eat food",
-			position = 2
+			position = 1
 	)
 	default boolean getHitpointsEnabled(){return false;}
 
 	@ConfigSection(
 			name = "Food Options",
 			description = "Various food options",
-			position = 4,
+			position = 3,
 			closedByDefault = true
 	)
 	String typeFoods = "foodTypes";
@@ -50,7 +38,7 @@ public interface CanIEatConfig extends Config
 			keyName = "typeFood",
 			name = "Food Type?",
 			description = "This is the active type of food",
-			position = 5,
+			position = 4,
 			section = typeFoods
 	)
 	default FoodTypes foodTypes() {return FoodTypes.Potato_Cheese;}
@@ -59,17 +47,14 @@ public interface CanIEatConfig extends Config
 			keyName = "prayer",
 			name = "Enable Prayer Warning",
 			description = "Enable notifications for when to drink for prayer restoration",
-			position = 3
+			position = 2
 	)
-	default boolean getPrayerEnabled()
-	{
-		return false;
-	}
+	default boolean getPrayerEnabled() {return false;}
 
 	@ConfigSection(
 			name = "Prayer Restoration Options",
 			description = "Prayer Restoration Options",
-			position = 7,
+			position = 5,
 			closedByDefault = true
 	)
 	String typeRestores = "restoreTypes";
@@ -78,7 +63,7 @@ public interface CanIEatConfig extends Config
 			keyName = "typeRestoration",
 			name = "Restore Type?",
 			description = "This is the active type of prayer restoration",
-			position = 8,
+			position = 6,
 			section = typeRestores
 	)
 	default RestoreTypes restoreTypes(){return RestoreTypes.Prayer_Potion;}
@@ -87,7 +72,7 @@ public interface CanIEatConfig extends Config
 			keyName = "holyWrench",
 			name = "Using Holy Wrench?",
 			description = "This is in my inventory as well",
-			position = 10,
+			position = 7,
 			section = typeRestores
 	)
 	default boolean HolyWrench(){return false;}

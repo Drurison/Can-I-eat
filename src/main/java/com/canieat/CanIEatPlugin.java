@@ -1,12 +1,9 @@
 package com.canieat;
 
 import com.google.inject.Provides;
-import java.time.Duration;
 import javax.inject.Inject;
 
 import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.Player;
 import net.runelite.api.Skill;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
@@ -24,7 +21,6 @@ import net.runelite.client.plugins.PluginDescriptor;
 )
 public class CanIEatPlugin extends Plugin
 {
-
 	@Inject
 	private Notifier notifier;
 
@@ -46,18 +42,6 @@ public class CanIEatPlugin extends Plugin
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
-		final Player local = client.getLocalPlayer();
-		final Duration waitDuration = Duration.ofMillis(config.getExampleDelay());
-		//lastCombatCountdown = Math.max(lastCombatCountdown - 1, 0);
-
-		if (client.getGameState() != GameState.LOGGED_IN
-				|| local == null
-				// If user has clicked in the last second then they're not idle so don't send idle notification
-				|| System.currentTimeMillis() - client.getMouseLastPressedMillis() < 1000
-				|| client.getKeyboardIdleTicks() < 10)
-		{
-			return;
-		}
 
 		if (checkLowHitpoints())
 		{
@@ -68,12 +52,14 @@ public class CanIEatPlugin extends Plugin
 		{
 			notifier.notify("You can drink a prayer restore!");
 		}
+		{
+			return;
+		}
 	}
 
 	private boolean checkLowHitpoints()
-	{	//Checking Player's Set Threshold to see if enabled or not
-
-		int heal = 0;
+	{
+		int heal;
 		switch (config.foodTypes())
 		{
 			case Potato_Cheese:
@@ -91,7 +77,7 @@ public class CanIEatPlugin extends Plugin
 
 		if (!config.getHitpointsEnabled())
 		{
-			return false; //If set to 0, return nothing
+			return false;
 		}
 
 		if (client.getBoostedSkillLevel(Skill.HITPOINTS) + client.getVarbitValue(Varbits.NMZ_ABSORPTION) <= (client.getRealSkillLevel(Skill.HITPOINTS) - heal))
@@ -114,7 +100,7 @@ public class CanIEatPlugin extends Plugin
 	{
 		int realPrayerLevel = client.getRealSkillLevel(Skill.PRAYER);
 
-		double restore = 0;
+		double restore;
 		switch (config.restoreTypes())
 		{
 			case Prayer_Potion:
