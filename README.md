@@ -1,2 +1,2 @@
-# Example
-An example greeter plugin
+# Can I Eat
+This plugin works somewhat like Idle Notifier, but instead of setting a threshold for prayer or hitpoints, you select the food / prayer restoration items you'd be using. This will allow the plugin to alert you when it's possible to either eat food or drink a prayer restoration item.
